@@ -1,0 +1,236 @@
+/* Reset & Base Styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6fa;
+  color: #333;
+  overflow-x: hidden;  /* Only hide horizontal scroll */
+  overflow-y: auto;    /* Allow vertical scroll */
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 100vh; /* So it grows beyond viewport if needed */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+
+/* Upload Section */
+.upload-section {
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease;
+}
+
+.upload-section:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+
+
+.upload-section label {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #007bff;
+  font-size: 1rem;
+}
+
+.upload-section input[type="file"] {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccd4dd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.upload-section input[type="file"]:hover {
+  border-color: #007bff;
+}
+
+/* Layout */
+.email-form-section {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex: 1;
+  /* overflow: hidden; */
+}
+
+.email-form {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  gap: 1rem;
+  overflow: auto;
+}
+
+/* Form Fields */
+fieldset {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+  font-size: 0.92rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
+}
+
+legend {
+  font-weight: 600;
+  color: #007bff;
+  font-size: 1rem;
+  padding: 0 0.3rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccd4dd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+label{
+  margin-top: 1.5vh !important;
+  margin-bottom: 1.5vh !important;
+}
+
+#toggle-smtp-pass {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.form-actions button {
+  padding: 0.45rem 1rem;
+  font-size: 0.88rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-actions button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+#delete-log {
+  background-color: crimson !important;
+}
+
+#delete-log:hover {
+  background-color: darkred !important;
+}
+
+/* Status Box */
+.status-section {
+  width: 460px;
+  background-color: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 0.88rem;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+}
+
+.status p {
+  margin: 0.4rem 0;
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 0.6rem;
+  border-radius: 6px;
+  gap: 0.4rem;
+}
+
+.errors-section {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: crimson;
+}
+
+/* Responsive: Medium Screens */
+@media (max-width: 1100px) {
+  .email-form-section {
+    flex-direction: column;
+  }
+
+  .status-section {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+/* Responsive: Small Screens */
+@media (max-width: 600px) {
+  .upload-section {
+    padding: 1rem;
+  }
+
+  .upload-section label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .upload-section input[type="file"] {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
