@@ -10,6 +10,7 @@ const redisClient = createRedisClient();
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 const emailQueue = require('../workprocess/queue');
+const { getAutoConfig } = require('../config/smtp-config');
 
 // Ensure uploads directory exists
 const uploadsDir = path.join(__dirname, '..', 'uploads');
@@ -159,12 +160,7 @@ router.post('/send-email', async (req, res) => {
       logKey = `emaillog:${sessionId}`;
     }
 
-    const smtp = {
-      host: smtpHost,
-      port: parseInt(smtpPort),
-      secure: parseInt(smtpPort) === 465,
-      auth: { user: smtpUser, pass: smtpPass }
-    };
+    const smtp = getAutoConfig(smtpHost, smtpPort, smtpUser, smtpPass);
     const from = `${fromName} <${fromEmail}>`;
     const isHtml = plainHtml === 'HTML';
 

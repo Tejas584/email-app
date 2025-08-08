@@ -3,6 +3,7 @@ const emailQueue = require('./queue');
 const nodemailer = require('nodemailer');
 const createRedisClient = require('../config/redis');
 const client = createRedisClient();
+const { getLenientConfig, getPermissiveConfig } = require('../config/smtp-config');
 
 console.log('Email worker started and waiting for jobs...');
 
@@ -12,7 +13,31 @@ emailQueue.process(async (job, done) => {
   const { smtp, email, from, subject, message, isHtml, logKey } = job.data;
   
   try {
-    const transporter = nodemailer.createTransport(smtp);
+    // Try with original configuration first
+    let transporter = nodemailer.createTransport(smtp);
+    
+    // Test the connection
+    try {
+      await transporter.verify();
+    } catch (verifyError) {
+      console.log(`Connection failed with original config for ${email}, trying lenient config...`);
+      
+      // If original fails, try lenient configuration
+      const lenientSmtp = getLenientConfig(smtp.host, smtp.port, smtp.auth.user, smtp.auth.pass);
+      transporter = nodemailer.createTransport(lenientSmtp);
+      
+      try {
+        await transporter.verify();
+      } catch (lenientError) {
+        console.log(`Lenient config also failed for ${email}, trying permissive config...`);
+        
+        // If lenient fails, try permissive configuration
+        const permissiveSmtp = getPermissiveConfig(smtp.host, smtp.port, smtp.auth.user, smtp.auth.pass);
+        transporter = nodemailer.createTransport(permissiveSmtp);
+        
+        // Don't verify permissive config as it might not support verification
+      }
+    }
     
     await transporter.sendMail({
       from,
